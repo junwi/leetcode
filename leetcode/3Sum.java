@@ -34,6 +34,7 @@ public class Solution {
                 else --e;
             }
         }
+
         return result;
     }
 }
