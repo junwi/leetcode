@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Solution {
     
-    public ArrayList<ArrayList<Integer>> threeaSum(int[] num) {
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
         Arrays.sort(num);
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         for (int i = 0; i < num.length - 2; ++i) {
