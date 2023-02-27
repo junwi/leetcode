@@ -54,30 +54,20 @@ public:
             } else {
                 root = current->left;
             }
-            delete current;
-        } else if (current->left == nullptr && current->right == nullptr) {
-            if (parent->left == current) {
-                parent->left = nullptr;
+        } else {
+            TreeNode* tmp;
+            if (current->left == nullptr) {
+                tmp = current->right;
             } else {
-                parent->right = nullptr;
+                tmp = current->left;
             }
-            delete current;
-            return root;
-        } else if (current->left == nullptr) {
-            if (parent->left == current) {
-                parent->left = current->right;
+            if (parent->right == current) {
+                parent->right = tmp;
             } else {
-                parent->right = current->right;
+                parent->left = tmp;
             }
-            delete current;
-        } else if (current->right == nullptr) {
-            if (parent->left == current) {
-                parent->left = current->left;
-            } else {
-                parent->right = current->left;
-            }
-            delete current;
         }
+        delete current;
 
         return root;
     }
