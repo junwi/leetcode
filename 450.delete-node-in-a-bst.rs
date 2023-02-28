@@ -28,7 +28,7 @@ use std::cell::RefCell;
 use std::ops::Deref;
 impl Solution {
     pub fn delete_node(root: Option<Rc<RefCell<TreeNode>>>, key: i32) -> Option<Rc<RefCell<TreeNode>>> {
-        let mut current: &Option<Rc<RefCell<TreeNode>>> = &root;
+        let mut current: Rc<RefCell<TreeNode>> = root.to_owned().unwrap();
         let mut parent: &Option<Rc<RefCell<TreeNode>>>;
         while let Some(node) = current {
             if node.borrow().val == key {
