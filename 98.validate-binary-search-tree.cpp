@@ -17,30 +17,22 @@
  * };
  */
 class Solution {
-
-public:
-    bool isValidBST(TreeNode* root) {
+private:
+    bool isValidBST(TreeNode* root, TreeNode* left, TreeNode* right) {
         if (root == nullptr) {
             return true;
         }
-        stack<TreeNode*> st;
-        TreeNode* node = root;
-        TreeNode* prev = nullptr;
-        while (node != nullptr || !st.empty()) {
-            while (node != nullptr) {
-                st.push(node);
-                node = node->left;
-            }
-            node = st.top();
-            st.pop();
-            if (prev != nullptr && prev->val >= node->val) {
-                return false;
-            }
-            prev = node;
-            node = node->right;
+        if (left != nullptr && left->val >= root->val) {
+            return false;
         }
-
-        return true;
+        if (right != nullptr && right->val <= root->val) {
+            return false;
+        }
+        return isValidBST(root->left, left, root) && isValidBST(root->right, root, right);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root, nullptr, nullptr);
     }
 };
 // @lc code=end
