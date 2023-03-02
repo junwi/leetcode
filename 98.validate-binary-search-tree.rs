@@ -31,21 +31,13 @@ impl Solution {
         let mut current = root;
         let mut first = true;
         let mut prev = 0;
-        while let Some(mut node) = current {
-            while node.borrow().left.is_some() {
+        while current.is_some() || !st.is_empty() {
+            while let Some(node) = current {
                 st.push(node.clone());
-                let o = node.borrow().left.clone();
-                node = o.unwrap();
+                current = node.borrow().left.clone();
             }
-            while node.borrow().right.is_none() && !st.is_empty() {
-                if first {
-                    first = false;
-                } else if prev >= node.borrow().val {
-                    return false;
-                }
-                prev = node.borrow().val;
-                node = st.pop().unwrap();
-            }
+            current = st.pop();
+            let node = current.unwrap();
             if first {
                 first = false;
             } else if prev >= node.borrow().val {
