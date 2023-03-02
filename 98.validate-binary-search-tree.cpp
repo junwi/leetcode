@@ -26,19 +26,13 @@ public:
         stack<TreeNode*> st;
         TreeNode* node = root;
         TreeNode* prev = nullptr;
-        while (node != nullptr) {
-            while (node->left != nullptr) {
+        while (node != nullptr || !st.empty()) {
+            while (node != nullptr) {
                 st.push(node);
                 node = node->left;
             }
-            while (node->right == nullptr && !st.empty()) {
-                if (prev != nullptr && prev->val >= node->val) {
-                    return false;
-                }
-                prev = node;
-                node = st.top();
-                st.pop();
-            }
+            node = st.top();
+            st.pop();
             if (prev != nullptr && prev->val >= node->val) {
                 return false;
             }
