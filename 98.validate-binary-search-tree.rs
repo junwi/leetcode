@@ -25,29 +25,27 @@
 // }
 use std::rc::Rc;
 use std::cell::RefCell;
+type OptNode = Option<Rc<RefCell<TreeNode>>>;
 impl Solution {
     pub fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-        let mut st: Vec<Rc<RefCell<TreeNode>>> = Vec::new();
-        let mut current = root;
-        let mut first = true;
-        let mut prev = 0;
-        while current.is_some() || !st.is_empty() {
-            while let Some(node) = current {
-                st.push(node.clone());
-                current = node.borrow().left.clone();
-            }
-            current = st.pop();
-            let node = current.unwrap();
-            if first {
-                first = false;
-            } else if prev >= node.borrow().val {
-                return false;
-            }
-            prev = node.borrow().val;
-            current = node.borrow().right.clone();
-        }
+        Self::is_valid(root, None, None)
+    }
 
-        return true;
+    fn is_valid(root: OptNode, left: OptNode, right: OptNode) -> bool {
+        if let Some(node) = root {
+            if let Some(l) = left.clone() {
+                if l.borrow().val >= node.borrow().val {
+                    return false;
+                }
+            }
+            if let Some(r) = right.clone() {
+                if r.borrow().val <= node.borrow().val {
+                    return false;
+                }
+            }
+            return Self::is_valid(node.borrow().left.clone(), left.clone(), Some(node.clone())) && Self::is_valid(node.borrow().right.clone(), Some(node.clone()), right.clone());
+        }
+        true
     }
 }
 // @lc code=end
