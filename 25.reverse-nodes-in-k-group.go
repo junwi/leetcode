@@ -21,10 +21,10 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	for true {
 		last := prev
 		for i := 0; i < k; i++ {
-			last = last.Next
-			if last == nil {
+			if last.Next == nil {
 				return hair.Next
 			}
+			last = last.Next
 		}
 		next := last.Next
 		first := prev.Next
