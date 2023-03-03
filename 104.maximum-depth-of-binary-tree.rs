@@ -28,15 +28,18 @@ use std::cell::RefCell;
 use std::cmp;
 impl Solution {
     pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        match root {
-            Some(node) => {
-                cmp::max(
-                    Self::max_depth(node.borrow().left.clone()),
-                    Self::max_depth(node.borrow().right.clone())
-                ) + 1
+        fn max_depth_rec(root: &Option<Rc<RefCell<TreeNode>>>) ->i32 {
+            match root.as_ref() {
+                Some(node) => {
+                    cmp::max(
+                        max_depth_rec(&node.borrow().left),
+                        max_depth_rec(&node.borrow().right)
+                    ) + 1
+                }
+                None => 0
             }
-            None => 0
         }
+        max_depth_rec(&root)
     }
 }
 // @lc code=end
