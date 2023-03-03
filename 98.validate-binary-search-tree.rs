@@ -28,24 +28,23 @@ use std::cell::RefCell;
 type OptNode = Option<Rc<RefCell<TreeNode>>>;
 impl Solution {
     pub fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-        Self::is_valid(root, None, None)
-    }
-
-    fn is_valid(root: OptNode, left: OptNode, right: OptNode) -> bool {
-        if let Some(node) = root {
-            if let Some(l) = left.clone() {
-                if l.borrow().val >= node.borrow().val {
-                    return false;
+        fn is_valid(root: &OptNode, left: Option<i32>, right: Option<i32>) -> bool {
+            match root.as_ref() {
+                None => true,
+                Some(node) => {
+                    let node = node.borrow();
+                    if left.is_some() && left.unwrap() >= node.val {
+                        return false;
+                    }
+                    if right.is_some() && right.unwrap() <= node.val {
+                        return false;
+                    }
+                    is_valid(&node.left, left, Some(node.val)) && is_valid(&node.right, Some(node.val), right)
                 }
             }
-            if let Some(r) = right.clone() {
-                if r.borrow().val <= node.borrow().val {
-                    return false;
-                }
-            }
-            return Self::is_valid(node.borrow().left.clone(), left.clone(), Some(node.clone())) && Self::is_valid(node.borrow().right.clone(), Some(node.clone()), right.clone());
         }
-        true
+
+        is_valid(&root, None, None)
     }
 }
 // @lc code=end
