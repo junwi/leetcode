@@ -21,22 +21,27 @@ public:
             unordered_map<string, int> map;
             for (int l = i, r = i; r + m <= n; r += m) {
                 string str = s.substr(r, m);
+                if (wordCount.count(str) == 0) {
+                    l = r + m;
+                    count = 0;
+                    map.clear();
+                    continue;
+                }
                 ++map[str];
                 if (map[str] <= wordCount[str]) {
                     ++count;
                 }
+                while (map[str] > wordCount[str]) {
+                    string left = s.substr(l, m);
+                    if (map[left] <= wordCount[left]) {
+                        --count;
+                    }
+                    --map[left];
+                    l += m;
+                }
                 if (count == words.size()) {
-                    string str = s.substr(l, m);
-                    while (map[str] > wordCount[str]) {
-                        l += m;
-                        --map[str];
-                        str = s.substr(l, m);
-                    }
-                    int len = r - l;
-                    if (len == (words.size() - 1) * m) {
-                        res.push_back(l);
-                    }
-                    --map[str];
+                    res.push_back(l);
+                    --map[s.substr(l, m)];
                     --count;
                     l += m;
                 }
