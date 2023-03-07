@@ -8,9 +8,9 @@ import java.util.BitSet;
 
 // @lc code=start
 class Solution {
-    private BitSet col = new BitSet();
-    private BitSet main = new BitSet();
-    private BitSet sub = new BitSet();
+    private int col = 0;
+    private int main = 0;
+    private int sub = 0;
     private int n;
     private int result = 0;
 
@@ -28,17 +28,29 @@ class Solution {
             return;
         }
         for (int y = 0; y < n; y++) {
-            if (col.get(y) || main.get(x - y + n) || sub.get(x + y)) {
+            if (get(col, y) || get(main, x - y + n) || get(sub, x + y)) {
                 continue;
             }
-            col.set(y);
-            main.set(x - y + n);
-            sub.set(x + y);
+            col = set(col, y);
+            main = set(main, x - y + n);
+            sub = set(sub, x + y);
             solve(x + 1);
-            col.clear(y);
-            main.clear(x - y + n);
-            sub.clear(x + y);
+            col = clear(col, y);
+            main = clear(main, x - y + n);
+            sub = clear(sub, x + y);
         }
+    }
+
+    private int set(int source, int bitIndex) {
+        return source | (1 << bitIndex);
+    }
+
+    private int clear(int source, int bitIndex) {
+        return source & ~(1 << bitIndex);
+    }
+
+    private boolean get(int source, int bitIndex) {
+        return (source & (1 << bitIndex)) != 0;
     }
 }
 // @lc code=end
