@@ -24,13 +24,10 @@ class Solution {
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 char pc = p.charAt(j - 1);
-                if (pc == '?') {
+                if (pc == '?' || pc == s.charAt(i - 1)) {
                     mem[i][j] = mem[i - 1][j - 1];
                 } else if (pc == '*') {
-                    mem[i][j] = mem[i - 1][j - 1] || mem[i][j - 1] || mem[i - 1][j];
-                } else {
-                    char sc = s.charAt(i - 1);
-                    mem[i][j] = mem[i - 1][j - 1] && (pc == sc);
+                    mem[i][j] = mem[i][j - 1] || mem[i - 1][j];
                 }
             }
         }
