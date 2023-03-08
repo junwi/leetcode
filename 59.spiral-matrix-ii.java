@@ -7,33 +7,33 @@
 // @lc code=start
 class Solution {
     public int[][] generateMatrix(int n) {
+        int num = 1, tar = n * n;
+        int l = 0, r = n - 1, t = 0, b = n - 1;
         int[][] matrix = new int[n][n];
-        fillAround(matrix, 1, 0, 0, n);
+        while (num <= tar) {
+            // left to right
+            for (int i = l; i <= r; i++) {
+                matrix[t][i] = num++;
+            }
+            t++;
+            // top to bottom
+            for (int i = t; i <= b; i++) {
+                matrix[i][r] = num++;
+            }
+            r--;
+            // right to left
+            for (int i = r; i >= l; i--) {
+                matrix[b][i] = num++;
+            }
+            b--;
+            // bottom to top
+            for (int i = b; i >= t; i--) {
+                matrix[i][l] = num++;
+            }
+            l++;
+        }
 
         return matrix;
-    }
-
-    private void fillAround(int[][] matrix, int begin, int x, int y, int n) {
-        if (n == 0) {
-            return;
-        }
-        if (n == 1) {
-            matrix[x][y] = begin;
-            return;
-        }
-        for (int i = 0; i < n; i++) {
-            matrix[x][y + i] = begin++;
-        }
-        for (int i = 1; i < n; i++) {
-            matrix[x + i][y + n - 1] = begin++;
-        }
-        for (int i = n - 2; i >= 0; i--) {
-            matrix[x + n - 1][y + i] = begin++;
-        }
-        for (int i = n - 2; i >= 1; i--) {
-            matrix[x + i][y] = begin++;
-        }
-        fillAround(matrix, begin, x + 1, y + 1, n - 2);
     }
 }
 // @lc code=end
