@@ -11,12 +11,13 @@ class Solution {
         int l = 0, r = 0, max = 0, n = s.length();
         while (r < n) {
             char c = s.charAt(r++);
-            if (dict[c] > 0) {
-                while (l < dict[c]) {
-                    dict[s.charAt(l++)] = 0;
-                }
-            } else {
+            if (dict[c] == 0) {
+                dict[c] = r;
                 max = Math.max(max, r - l);
+                continue;
+            }
+            for (; l < dict[c]; l++) {
+                dict[s.charAt(l)] = 0;
             }
             dict[c] = r;
         }
