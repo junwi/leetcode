@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * @lc app=leetcode id=14 lang=java
  *
@@ -10,20 +12,18 @@ class Solution {
         if (strs == null || strs.length == 0) {
             return "";
         }
-        String str = strs[0];
-        int n = str.length();
-        for (int j = 1; j < strs.length; j++) {
-            String s = strs[j];
-            n = Math.min(n, s.length());
-            for (int i = 0; i < n; i++) {
-                if (str.charAt(i) != s.charAt(i)) {
-                    n = i;
-                    break;
-                }
-            }
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        Arrays.sort(strs);
+        String first = strs[0];
+        String last = strs[strs.length - 1];
+        int i = 0;
+        for (; i < first.length(); i++) {
+            if (first.charAt(i) != last.charAt(i)) break;
         }
 
-        return str.substring(0, n);
+        return first.substring(0, i);
     }
 }
 // @lc code=end
