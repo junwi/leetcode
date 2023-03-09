@@ -12,18 +12,19 @@ class Solution {
         if (strs == null || strs.length == 0) {
             return "";
         }
-        if (strs.length == 1) {
-            return strs[0];
-        }
-        Arrays.sort(strs);
-        String first = strs[0];
-        String last = strs[strs.length - 1];
-        int i = 0;
-        for (; i < first.length(); i++) {
-            if (first.charAt(i) != last.charAt(i)) break;
+        int n = strs[0].length(), i = 0;
+        for (; i < n; i++) {
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].length() == i) {
+                    return strs[0].substring(0, i);
+                }
+                if (strs[j].charAt(i) != strs[0].charAt(i)) {
+                    return strs[0].substring(0, i);
+                }
+            }
         }
 
-        return first.substring(0, i);
+        return strs[0].substring(0, i);
     }
 }
 // @lc code=end
