@@ -15,12 +15,10 @@ class Solution {
             } else {
                 max = nums[i];
             }
-        }
-        for (int i = n - 1; i >= 0; i--) {
-            if (nums[i] > min) {
-                l = i;
+            if (nums[n - 1 - i] > min) {
+                l = n - 1 - i;
             } else {
-                min = nums[i];
+                min = nums[n - 1 - i];
             }
         }
 
