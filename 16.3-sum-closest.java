@@ -16,9 +16,7 @@ class Solution {
                 if (sum == target) {
                     return target;
                 }
-                if (sum > target && result > target && sum < result) {
-                    result = sum;
-                } else if (sum < target && result < target && sum > result) {
+                if (Math.abs(sum - target) < Math.abs(result - target)) {
                     result = sum;
                 }
                 if (sum > target) {
