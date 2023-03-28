@@ -42,3 +42,4 @@ atlassian-ide-plugin.xml
 release.properties
 pom.xml.releaseBackup
 **/.flattened-pom.xml
+.history/
