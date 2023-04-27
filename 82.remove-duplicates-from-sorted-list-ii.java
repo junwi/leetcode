@@ -27,12 +27,11 @@ class Solution {
         while (head != null) {
             if (dup != null) {
                 if (dup.val == head.val) {
-                    head = head.next;
-                    pre.next = head;
+                    pre.next = head.next;
                 } else {
-                    head = head.next;
                     dup = null;
                 }
+                head = head.next;
                 continue;
             }
             if (head.val == pre.next.val) {
