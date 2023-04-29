@@ -9,19 +9,23 @@ import java.util.Stack;
 // @lc code=start
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        Stack<Integer> stack = new Stack<>();
+        int m = heights.length, index = 0;
+        int[] stack = new int[m];
         int max = 0;
-        for (int i = 0; i <= heights.length; i++) {
-            if (stack.isEmpty()) {
-                stack.push(i);
+        for (int i = 0; i <= m; i++) {
+            if (index == 0) {
+                stack[index++] = i;
                 continue;
             }
-            while (!stack.isEmpty() && (i == heights.length || (heights[i] < heights[stack.peek()]))) {
-                int h = stack.pop();
-                int area = heights[h] * (stack.isEmpty() ? i : (i - stack.peek() - 1));
-                max = Math.max(max, area);
+            while (index > 0 && (i == m || heights[i] < heights[stack[index - 1]])) {
+                int h = heights[stack[--index]];
+                int w = index == 0 ? i : i - stack[index - 1] - 1;
+                int area = w * h;
+                if (area > max) {
+                    max = area;
+                }
             }
-            stack.push(i);
+            stack[index++] = i;
         }
 
         return max;
