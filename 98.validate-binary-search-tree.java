@@ -21,33 +21,27 @@
  * }
  */
 class Solution {
+    private TreeNode pre = null;
+
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;
         }
-        if (!solve(root.left, null, root)) {
-            return false;
-        }
-        if (!solve(root.right, root, null)) {
-            return false;
-        }
-        return true;
+        return solve(root);
     }
 
-    private boolean solve(TreeNode root, TreeNode left, TreeNode right) {
+    private boolean solve(TreeNode root) {
         if (root == null) {
             return true;
         }
-        if (left != null && left.val >= root.val) {
+        if (!solve(root.left)) {
             return false;
         }
-        if (right != null && right.val <= root.val) {
+        if (pre != null && pre.val >= root.val) {
             return false;
         }
-        if (!solve(root.left, left, root)) {
-            return false;
-        }
-        if (!solve(root.right, root, right)) {
+        pre = root;
+        if (!solve(root.right)) {
             return false;
         }
         return true;
