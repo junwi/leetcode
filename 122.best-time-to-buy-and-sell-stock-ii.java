@@ -8,13 +8,13 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int result = 0;
-        int have = -prices[0];
+        int buy = -prices[0];
         for (int i = 1; i < prices.length; i++) {
-            int gap = prices[i] + have;
-            if (gap > 0) {
-                result += gap;
+            int sell = prices[i] + buy;
+            if (sell > 0) {
+                result += sell;
             }
-            have = -prices[i];
+            buy = -prices[i];
         }
 
         return result;
