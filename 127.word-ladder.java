@@ -11,40 +11,63 @@ import java.util.List;
 import java.util.Set;
 
 class Solution {
+    private Set<String> begin = new HashSet<>();
+    private Set<String> end = new HashSet<>();
+    private Set<String> words;
+    private boolean find = false;
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        Set<String> words = new HashSet<>(wordList);
+        words = new HashSet<>(wordList);
         if (!words.contains(endWord)) {
             return 0;
         }
-        int distance = 1;
-        Set<String> begin = new HashSet<>();
+        int count = 1;
         begin.add(beginWord);
-        while (!words.isEmpty()) {
-            begin = adjacent(begin, words);
+        end.add(endWord);
+        words.remove(endWord);
+        while (true) {
+            check();
+            if (find) {
+                return count + 1;
+            }
+            if (begin.size() > end.size()) {
+                swap();
+            }
+            adjacent();
             if (begin.isEmpty()) {
                 return 0;
             }
-            distance++;
-            if (begin.contains(endWord)) {
-                return distance;
-            }
-            words.removeAll(begin);
+            count++;
         }
-
-        return distance;
     }
 
-    private Set<String> adjacent(Set<String> set, Set<String> words) {
+    private void swap() {
+        Set<String> tmp = begin;
+        begin = end;
+        end = tmp;
+    }
+
+    private void check() {
+        for (String b : begin) {
+            for (String e : end) {
+                if (isAdjacent(b, e)) {
+                    find = true;
+                    return;
+                }
+            }
+        }
+    }
+
+    private void adjacent() {
         Set<String> adjacents = new HashSet<>();
         for (String s : words) {
-            for (String b : set) {
+            for (String b : begin) {
                 if (isAdjacent(s, b)) {
                     adjacents.add(s);
                 }
             }
         }
-
-        return adjacents;
+        begin = adjacents;
+        words.removeAll(begin);
     }
 
     private boolean isAdjacent(String word1, String word2) {
