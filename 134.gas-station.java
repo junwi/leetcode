@@ -8,25 +8,24 @@
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int m = gas.length;
-        int[] gap = new int[m * 2];
+        int spare = 0;
+        int minIndex = 0;
+        int minSpare = Integer.MAX_VALUE;
         for (int i = 0; i < m; i++) {
-            gap[i] = gas[i] - cost[i];
+            spare += gas[i] - cost[i];
+            if (spare < minSpare) {
+                minSpare = spare;
+                minIndex = i;
+            }
         }
-        System.arraycopy(gap, 0, gap, m, m);
-        int start = -1, amount = -1;
-        for (int i = 0; i < gap.length; i++) {
-            if (amount < 0) {
-                start = i;
-                amount = gap[i];
-            } else {
-                amount += gap[i];
-            }
-            if (amount >= 0 && i - start + 1 == m) {
-                return start;
-            }
+        if (spare < 0) {
+            return -1;
+        }
+        if (minSpare >= 0) {
+            return 0;
         }
 
-        return -1;
+        return (minIndex + 1) % m;
     }
 }
 // @lc code=end
