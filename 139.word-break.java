@@ -15,14 +15,15 @@ class Solution {
         int m = s.length();
         boolean[] dp = new boolean[m + 1];
         dp[0] = true;
-        for (int i = 0; i < m; i++) {
-            if (!dp[i]) {
-                continue;
-            }
-            for (int j = i + 1; j <= m; j++) {
-                String sub = s.substring(i, j);
+        for (int r = 1; r <= m; r++) {
+            for (int l = 0; l < m; l++) {
+                if (!dp[l]) {
+                    continue;
+                }
+                String sub = s.substring(l, r);
                 if (set.contains(sub)) {
-                    dp[j] = true;
+                    dp[r] = true;
+                    break;
                 }
             }
         }
